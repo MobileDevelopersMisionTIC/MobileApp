@@ -1,3 +1,3 @@
 # MobileApp
 Santiago Blandon - ScrumMaster
-Andres Ortega Toro - Analista
+<br/> Julian Lopez - Adminsitrador del servidor
