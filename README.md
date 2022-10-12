@@ -1,1 +1,2 @@
 # MobileApp
+Santiago Blandon - ScrumMaster
