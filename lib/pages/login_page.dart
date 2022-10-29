@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     final screen = ScaffoldMessenger.of(context);
     screen.showSnackBar(SnackBar(
       content: Text(message),
-      backgroundColor: Colors.brown,
+      backgroundColor: Colors.blue.shade900,
     ));
   }
 
