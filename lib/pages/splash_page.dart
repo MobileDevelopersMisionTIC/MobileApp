@@ -30,10 +30,17 @@ class _SplashPageState extends State<SplashPage> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
         margin: const EdgeInsets.all(30),
-        child: const Image(
-          image: AssetImage("assets/images/logo.png"),
-          width: 200,
-          height: 200,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: const [
+            Image(
+              image: AssetImage("assets/images/logo.png"),
+              width: 200,
+              height: 200,
+            ),
+            CircularProgressIndicator()
+          ],
         ),
       ),
     ));
