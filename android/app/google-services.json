@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "220493221545",
+    "project_id": "mobileapp-misiontic-c4",
+    "storage_bucket": "mobileapp-misiontic-c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220493221545:android:1e2738a2e3701ac0c7a3b8",
+        "android_client_info": {
+          "package_name": "udea.edu.co.mobileapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220493221545-ggrdefr4ghepgs05vo5ojk9c02ggkmf4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxHO1H0AMjTS1-NOZa3q4sUNh9RbQHR78"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220493221545-ggrdefr4ghepgs05vo5ojk9c02ggkmf4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
