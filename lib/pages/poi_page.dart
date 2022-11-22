@@ -14,6 +14,7 @@ class PointOfInterest extends StatefulWidget {
 class _PointOfInterestState extends State<PointOfInterest> {
   List pois = [];
   List idDoc = [];
+  final buscar = TextEditingController();
 
   @override
   void initState() {
@@ -38,10 +39,39 @@ class _PointOfInterestState extends State<PointOfInterest> {
           id = pas.id;
           idDoc.add(id);
           pois.add(pas.data());
-          print("_>>>>>>>>>>>>>>>>>>>>>>>${pas.data().toString()}");
         }
       }
     });
+  }
+
+  Future getCiudad() async {
+    idDoc.clear();
+    pois.clear();
+    String id = "";
+
+    QuerySnapshot poiCiudad = await FirebaseFirestore.instance
+        .collection("LugarTuristico")
+        .where("ciudad", isEqualTo: buscar.text)
+        .get();
+    // QuerySnapshot mascota = await FirebaseFirestore.instance
+    //     .collection("Usuarios")
+    //     .doc(uid)
+    //     .collection("mascotas")
+    //     .where("nombre", isEqualTo: "paquito").get();
+
+    setState(() {
+      if (poiCiudad.docs.isNotEmpty) {
+        for (var pas in poiCiudad.docs) {
+          id = pas.id;
+          idDoc.add(id);
+          pois.add(pas.data());
+        }
+      }
+    });
+
+    if (buscar.text.isEmpty) {
+      getPoi();
+    }
   }
 
   @override
@@ -59,14 +89,18 @@ class _PointOfInterestState extends State<PointOfInterest> {
                       padding: const EdgeInsets.only(
                           top: 20, left: 5, right: 0, bottom: 0),
                       child: TextFormField(
-                          controller: null,
+                          controller: buscar,
                           keyboardType: TextInputType.text,
                           decoration: const InputDecoration(
                             labelText: "Ciudad",
                             border: OutlineInputBorder(),
                           )))),
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      getCiudad();
+                    });
+                  },
                   padding: const EdgeInsets.only(right: 5, top: 15),
                   icon: const Icon(
                     Icons.search,
