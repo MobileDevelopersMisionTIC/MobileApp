@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileapp/model/modelos_model.dart';
+import 'package:mobileapp/pages/menu_page.dart';
 import 'package:mobileapp/pages/poiDetalle_page.dart';
 import 'package:mobileapp/repository/utilities.dart';
 
@@ -79,6 +80,7 @@ class _PointOfInterestState extends State<PointOfInterest> {
       appBar: AppBar(
         title: const Text("Sitios Turisticos"),
       ),
+      drawer: MenuPage(),
       body: Stack(
         children: [
           Row(
