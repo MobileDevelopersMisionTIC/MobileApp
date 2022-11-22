@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive/hive.dart';
 part 'poi_local.g.dart';
 
@@ -16,4 +17,6 @@ class PoiLocal extends HiveObject {
   String? descripcion;
   @HiveField(5)
   int? puntuacion;
+  @HiveField(6)
+  GeoPoint? ubicacion;
 }

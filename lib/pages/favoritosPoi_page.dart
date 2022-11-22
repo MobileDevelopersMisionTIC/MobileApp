@@ -65,6 +65,7 @@ class _FavPoiState extends State<FavPoi> {
                               foto: lista[i].foto ?? "",
                               descripcion: lista[i].descripcion ?? "",
                               puntuacion: lista[i].puntuacion ?? 0,
+                              ubicacion: lista[i].ubicacion!,
                               id: lista[i].id ?? "");
                           Navigator.push(
                               context,
@@ -74,6 +75,7 @@ class _FavPoiState extends State<FavPoi> {
                         },
                         onLongPress: () {
                           setState(() {
+                            print(lista[i].ubicacion);
                             lista[i].delete();
                           });
                         },

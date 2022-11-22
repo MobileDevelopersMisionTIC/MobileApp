@@ -1,11 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobileapp/model/modelos_model.dart';
 import 'package:mobileapp/model/poi_local.dart';
 import 'package:mobileapp/pages/menu_page.dart';
 import 'package:mobileapp/repository/boxes.dart';
 import 'package:mobileapp/repository/utilities.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+import 'mapaPoi_page.dart';
 
 class DetallePoi extends StatefulWidget {
   final DatosPoi poi;
@@ -144,11 +149,25 @@ class _DetallePoiState extends State<DetallePoi> {
               allowHalfRating: true,
               itemCount: 5,
               itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-            )
+            ),
           ]),
           // )
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+          child: const Icon(
+            FontAwesomeIcons.mapLocation,
+            size: 30,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MapaPoi(
+                          poi: widget.poi,
+                        )));
+          }),
     );
   }
 }

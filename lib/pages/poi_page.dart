@@ -145,8 +145,9 @@ class _PointOfInterestState extends State<PointOfInterest> {
                               foto: pois[i]["foto"],
                               descripcion: pois[i]["descripcion"],
                               puntuacion: pois[i]["puntuacion"],
-                              // ubicacion: pois[i]["ubicacion"],
+                              ubicacion: pois[i]["ubicacion"],
                               id: idDoc[i]);
+                          print(poiNew.ubicacion.latitude);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
