@@ -48,29 +48,28 @@ class _PointOfInterestState extends State<PointOfInterest> {
     idDoc.clear();
     pois.clear();
     String id = "";
-
-    QuerySnapshot poiCiudad = await FirebaseFirestore.instance
-        .collection("LugarTuristico")
-        .where("ciudad", isEqualTo: buscar.text)
-        .get();
-    // QuerySnapshot mascota = await FirebaseFirestore.instance
-    //     .collection("Usuarios")
-    //     .doc(uid)
-    //     .collection("mascotas")
-    //     .where("nombre", isEqualTo: "paquito").get();
-
-    setState(() {
-      if (poiCiudad.docs.isNotEmpty) {
-        for (var pas in poiCiudad.docs) {
-          id = pas.id;
-          idDoc.add(id);
-          pois.add(pas.data());
-        }
-      }
-    });
-
     if (buscar.text.isEmpty) {
       getPoi();
+    } else {
+      QuerySnapshot poiCiudad = await FirebaseFirestore.instance
+          .collection("LugarTuristico")
+          .where("ciudad", isEqualTo: buscar.text)
+          .get();
+      // QuerySnapshot mascota = await FirebaseFirestore.instance
+      //     .collection("Usuarios")
+      //     .doc(uid)
+      //     .collection("mascotas")
+      //     .where("nombre", isEqualTo: "paquito").get();
+
+      setState(() {
+        if (poiCiudad.docs.isNotEmpty) {
+          for (var pas in poiCiudad.docs) {
+            id = pas.id;
+            idDoc.add(id);
+            pois.add(pas.data());
+          }
+        }
+      });
     }
   }
 
@@ -105,7 +104,7 @@ class _PointOfInterestState extends State<PointOfInterest> {
                   icon: const Icon(
                     Icons.search,
                     size: 40,
-                    color: Colors.brown,
+                    color: Colors.lightBlue,
                   ))
             ],
           ),
