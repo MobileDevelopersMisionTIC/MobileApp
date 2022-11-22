@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileapp/model/modelos_model.dart';
+import 'package:mobileapp/pages/poiDetalle_page.dart';
+import 'package:mobileapp/repository/utilities.dart';
 
 class PointOfInterest extends StatefulWidget {
   PointOfInterest({Key? key}) : super(key: key);
@@ -8,72 +12,118 @@ class PointOfInterest extends StatefulWidget {
 }
 
 class _PointOfInterestState extends State<PointOfInterest> {
-  String poi="Bulevar del rio";
-  String ciudad = "Cali";
-  String departamento = "Valle del Cauca";
-  int temperatura = 30;
-  String descripcion =
-      "El Bulevar de la Avenida Colombia, conocido también como el Bulevar del Río por estar situado a orillas del río Cali, es un bulevar ubicado en el centro histórico de la ciudad de Santiago de Cali, Colombia. Porta el nombre de la avenida que otrora transitaba en el lugar donde hoy se encuentra el bulevar y la cual sigue funcionando por medio de un túnel ubicado directamente debajo de éste, siendo este el túnel urbano más largo de Colombia.";
+  List pois = [];
+  List idDoc = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPoi();
+  }
+
+  Future getPoi() async {
+    String id = "";
+    QuerySnapshot poi =
+        await FirebaseFirestore.instance.collection("LugarTuristico").get();
+    // QuerySnapshot mascota = await FirebaseFirestore.instance
+    //     .collection("Usuarios")
+    //     .doc(uid)
+    //     .collection("mascotas")
+    //     .where("nombre", isEqualTo: "paquito").get();
+
+    setState(() {
+      if (poi.docs.isNotEmpty) {
+        for (var pas in poi.docs) {
+          id = pas.id;
+          idDoc.add(id);
+          pois.add(pas.data());
+          print("_>>>>>>>>>>>>>>>>>>>>>>>${pas.data().toString()}");
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(
-          "Detalle Sitio Turistico, $poi",
-          style: const TextStyle(color: Colors.white, fontSize: 17) ,
-        ),
+        title: const Text("Sitios Turisticos"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 50),
-        child: SingleChildScrollView(
-          // child: Center(
-
-          child: Column(children: [
-            Center(
-                child: Column(children:  [
-              Text(
-                poi,
-                style: const TextStyle(fontSize: 29, fontWeight: FontWeight.bold),
-              ),
-             const SizedBox(
-                height: 40,
-              ),
-            const  ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                  child: Image(image: AssetImage("assets/images/cali.jpg"))),
-             const SizedBox(
-                height: 30,
-              ),
-            ])),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Ciudad: $ciudad", style: const TextStyle(fontSize: 19)),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text("Departamento: $departamento",
-                    style: const TextStyle(fontSize: 19)),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Temperatura: $temperatura",
-                  style: const TextStyle(fontSize: 19),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text("Descripcion: $descripcion",
-                    style: const TextStyle(fontSize: 19),
-                    textAlign: TextAlign.justify),
-              ],
-            )
-          ]),
-          // )
-        ),
+      body: Stack(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                  child: Container(
+                      padding: const EdgeInsets.only(
+                          top: 20, left: 5, right: 0, bottom: 0),
+                      child: TextFormField(
+                          controller: null,
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            labelText: "Ciudad",
+                            border: OutlineInputBorder(),
+                          )))),
+              IconButton(
+                  onPressed: () {},
+                  padding: const EdgeInsets.only(right: 5, top: 15),
+                  icon: const Icon(
+                    Icons.search,
+                    size: 40,
+                    color: Colors.brown,
+                  ))
+            ],
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 100),
+            child: ListView.builder(
+                itemCount: pois.length,
+                itemBuilder: (BuildContext context, i) {
+                  return Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                          pois[i]["foto"],
+                        )),
+                      ),
+                      Expanded(
+                          child: ListTile(
+                        title: Text(
+                          pois[i]["nombre"],
+                          style: const TextStyle(
+                              fontSize: 20, color: Colors.black),
+                          textAlign: TextAlign.left,
+                        ),
+                        subtitle: Text(
+                          pois[i]["ciudad"].toString().capitalize(),
+                        ),
+                        onTap: () {
+                          DatosPoi poiNew = DatosPoi(
+                              nombre: pois[i]["nombre"],
+                              ciudad: pois[i]["ciudad"],
+                              foto: pois[i]["foto"],
+                              descripcion: pois[i]["descripcion"],
+                              puntuacion: pois[i]["puntuacion"],
+                              // ubicacion: pois[i]["ubicacion"],
+                              id: idDoc[i]);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetallePoi(poi: poiNew)));
+                        },
+                      ))
+                    ],
+                  );
+                }),
+          )
+        ],
       ),
     );
   }
